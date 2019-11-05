@@ -73,15 +73,17 @@ const preformanceTests = async (options) => {
         ]);
 
         if (currentTimes !== options.numberOfStarts) {
-            await loop();
+            return await loop();
         } else if (serverApp) {
-            await serverApp.close();
+            return await serverApp.close();
+        } else {
+            return true;
         }
     };
 
     console.log(browserName);
 
-    await loop();
+    return await loop();
 };
 
 
