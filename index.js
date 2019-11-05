@@ -15,6 +15,7 @@ const preformanceTests = async (options) => {
         numberOfStarts: 100,
         waitingTime: 30000,
         server: {
+            enable: true,
             protocol: 'http',
             ip: 'localhost',
             port: 3000,
@@ -29,10 +30,16 @@ const preformanceTests = async (options) => {
 
         puppeteer: {
             useFirefox: false,
-            htmlFile: 'http://example.com/',
+            htmlFile: null,
+
+            // https://github.com/GoogleChrome/puppeteer#default-runtime-settings
             launchOptions: {}
         }
     }, options || {});
+
+    if (!options.puppeteer.htmlFile) {
+        throw new Error('You must set url!');
+    }
 
     let browserName = 'Chrome';
     if (options.puppeteer.useFirefox) {
